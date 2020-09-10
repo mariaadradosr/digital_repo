@@ -8,7 +8,7 @@ input_path = './input/'
 output_path = './output/'
 
 def main():
-    base = pd.read_csv('./output/base.csv',sep=';')
+    base = pd.read_csv('./output/base.csv',sep=';',decimal=',',encoding='CP1252')
     saved_files = [e.name for e in sorted(Path(input_path).iterdir(), key=os.path.getmtime,reverse=True)]
     print('\nSAVED_FILES....',saved_files)
     base_files = list(base.file.unique())
@@ -34,16 +34,16 @@ def main():
         mensual = base.groupby(by=['mes','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
         'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto']).sum()
         mensual.reset_index(inplace=True)
-        mensual.to_csv('./output/mensual.csv',sep=';',encoding='CP1252',index=False)
+        mensual.to_csv('./output/mensual.csv',sep=';',index=False,decimal=',', encoding='CP1252')
         print('\nMENSUAL ...... UPDATED\n')
 
         semanal = base.groupby(by=['mes','fecha_semana','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
         'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto']).sum()
         semanal.reset_index(inplace=True)
-        semanal.to_csv('./output/semanal.csv',sep=';',encoding='CP1252',index=False)
+        semanal.to_csv('./output/semanal.csv',sep=';',index=False,decimal=',', encoding='CP1252')
         print('\nSEMANAL ...... UPDATED\n')
-
-    base.to_csv('./output/base.csv',sep=';',encoding='CP1252',index=False)
+# encoding='CP1252'
+    base.to_csv('./output/base.csv',sep=';',index=False,decimal=',', encoding='CP1252')
     print('\nBASE ...... UPDATED\n')
 
 if __name__ == "__main__":
