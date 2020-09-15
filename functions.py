@@ -34,7 +34,7 @@ def NormalizarTipoCoste(description):
 def create_monthly_df(path,file):   
     xl = pd.ExcelFile(path+file)
     sheet = [e for e in xl.sheet_names if re.search('diario',e.lower())][0]
-    df = pd.read_excel(path+file, sheet_name=sheet)
+    df = pd.read_excel(xl, sheet_name=sheet).replace(r' ', 0)
     cols =['Cliente ', 'Campaña', 'Objetivo ', 'Sub-Objetivo', 'Objetivo Final', 
            'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto', 
            'fecha_dia','impresiones', 'clicks', 'inversion', 'measurable_impressions', 
@@ -55,6 +55,7 @@ def create_monthly_df(path,file):
     'video_75':'views_75',
     'video_completions':'views_100'},inplace=True
     )
+
     df2['objetivo'] = df2.objetivo_0.apply(lambda x: NormalizarObjetivo(x))
     df2['disciplina'] = df2.disciplina_0.apply(lambda x: NormalizarDisciplina(x)) 
     df2['tipo_coste'] = df2.tipo_coste_0.apply(lambda x: NormalizarTipoCoste(x))
@@ -64,8 +65,12 @@ def create_monthly_df(path,file):
     df2['fecha_semana']=df2.fecha_dia - df2.timedelta
     df2.drop(columns = ['dia_semana','timedelta'], inplace=True)
     df2['mes'] = df2.fecha_dia.apply(lambda x: x.month)
+    df2['fecha_semana']=df2['fecha_semana'].dt.date
+    df2['fecha_dia']=df2['fecha_dia'].dt.date
     df2['file'] = file
     df2 = df2.astype({
+       # 'fecha_dia':'object',
+       # 'fecha_semana':'object',
        'impresiones':'float64',
        'clics':'float64',
        'inversion':'float64',

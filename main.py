@@ -26,11 +26,12 @@ def main():
     for file in base_files:
         if file not in saved_files:
             print('removing....',file)
-            base = base.drop(base[base['file'] == file].index).reset_index()
+            base = base.drop(base[base['file'] == file].index)
     # Añadir archivos a base
     count = 0
     for file in saved_files:
         if file not in base_files:
+            print('adding to base.........',file)
             to_add = functions.create_monthly_df(path = input_path, file = file)
             base = pd.concat([base,to_add])
             print(file,'.......ADDED to base')
