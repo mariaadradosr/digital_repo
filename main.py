@@ -31,7 +31,7 @@ def main():
     count = 0
     for file in saved_files:
         if file not in base_files:
-            print('adding to base.........',file)
+            print('\nadding to base.........',file)
             to_add = functions.create_monthly_df(path = input_path, file = file)
             base = pd.concat([base,to_add])
             print(file,'.......ADDED to base')
@@ -40,16 +40,19 @@ def main():
         print('\nTHERE IS NO FILE TO ADD TO BASE\n')
     else:
         mensual = base.groupby(by=['mes','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
-        'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto']).sum()
+        'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto',
+        'creatividad','modelo_compra','modelo_programatico','dispositivo','estrategia','duracion_video']).sum()
         mensual.reset_index(inplace=True)
         mensual.to_csv('./output/mensual.csv',sep=';',index=False,decimal=',', encoding='CP1252')
         print('\nMENSUAL ...... UPDATED\n')
 
         semanal = base.groupby(by=['mes','fecha_semana','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
-        'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto']).sum()
+        'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto',
+        'creatividad','modelo_compra','modelo_programatico','dispositivo','estrategia','duracion_video']).sum()
         semanal.reset_index(inplace=True)
         semanal.to_csv('./output/semanal.csv',sep=';',index=False,decimal=',', encoding='CP1252')
         print('\nSEMANAL ...... UPDATED\n')
+    print('\nSaving base')
     base.to_csv('./output/base.csv',sep=';',index=False,decimal=',', encoding='CP1252')
     print('\nBASE ...... UPDATED\n')
 

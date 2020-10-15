@@ -36,9 +36,13 @@ def create_monthly_df(path,file):
     sheet = [e for e in xl.sheet_names if re.search('diario',e.lower())][0]
     df = pd.read_excel(xl, sheet_name=sheet).replace(r' ', 0)
     cols =['Cliente ', 'Campaña', 'Objetivo ', 'Sub-Objetivo', 'Objetivo Final', 
-           'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto', 
+           'disciplina', 'soporte',
+           'creatividad', 'tipo_coste','modelo_compra','modelo_programatico','dispositivo','duracion_video','estrategia', 
+           'pagador', 'producto', 'subproducto', 
            'fecha_dia','impresiones', 'clicks', 'inversion', 'measurable_impressions', 
-           'viewable_impressions', 'views', 'video_25', 'video_50', 'video_75', 'video_completions']
+           'viewable_impressions', 'views', 'video_25', 'video_50', 'video_75', 'video_completions',
+           'llamadas_atendidas_captacion','altas_tw_captacion','pedidos_web_captacion','altas_web_captacion'
+           ]
     df2 = df[cols].fillna(0)
     df2.rename(columns={'Cliente ':'cliente',
     'Campaña':'campanya',
@@ -81,10 +85,17 @@ def create_monthly_df(path,file):
        'views_50':'float64',
        'views_75':'float64',
        'views_100':'float64',
+       'llamadas_atendidas_captacion':'float64',
+       'altas_tw_captacion':'float64',
+       'pedidos_web_captacion':'float64',
+       'altas_web_captacion':'float64'
     })
     final = df2[['mes','fecha_semana', 'fecha_dia','cliente', 'campanya', 'objetivo', 'subojetivo', 'objetivo_final',
            'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto',
            'subproducto', 'impresiones', 'clics', 'inversion',
            'impresiones_medibles', 'impresiones_visibles', 'views', 'views_25',
-           'views_50', 'views_75', 'views_100', 'file']]
+           'views_50', 'views_75', 'views_100', 'file',
+           'creatividad','modelo_compra','modelo_programatico','dispositivo','estrategia','duracion_video',
+           'llamadas_atendidas_captacion','altas_tw_captacion','pedidos_web_captacion','altas_web_captacion'
+           ]]
     return final
