@@ -69,9 +69,11 @@ def create_monthly_df(path,file):
     df2['fecha_semana']=df2.fecha_dia - df2.timedelta
     df2.drop(columns = ['dia_semana','timedelta'], inplace=True)
     df2['mes'] = df2.fecha_dia.apply(lambda x: x.month)
+    df2['anyo'] = df2.fecha_dia.apply(lambda x: x.year)
     df2['fecha_semana']=df2['fecha_semana'].dt.date
     df2['fecha_dia']=df2['fecha_dia'].dt.date
     df2['file'] = file
+    
     df2 = df2.astype({
        # 'fecha_dia':'object',
        # 'fecha_semana':'object',
@@ -90,7 +92,7 @@ def create_monthly_df(path,file):
        'pedidos_web_captacion':'float64',
        'altas_web_captacion':'float64'
     })
-    final = df2[['mes','fecha_semana', 'fecha_dia','cliente', 'campanya', 'objetivo', 'subojetivo', 'objetivo_final',
+    final = df2[['anyo','mes','fecha_semana', 'fecha_dia','cliente', 'campanya', 'objetivo', 'subojetivo', 'objetivo_final',
            'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto',
            'subproducto', 'impresiones', 'clics', 'inversion',
            'impresiones_medibles', 'impresiones_visibles', 'views', 'views_25',

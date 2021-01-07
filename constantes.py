@@ -1,4 +1,5 @@
 base_inicial = {
+'anyo': [],
 'mes':  [],
 'fecha_semana':  [],
 'fecha_dia':  [],

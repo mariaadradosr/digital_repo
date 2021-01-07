@@ -39,14 +39,14 @@ def main():
     if count == 0:
         print('\nTHERE IS NO FILE TO ADD TO BASE\n')
     else:
-        mensual = base.groupby(by=['mes','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
+        mensual = base.groupby(by=['anyo','mes','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
         'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto',
         'creatividad','modelo_compra','modelo_programatico','dispositivo','estrategia','duracion_video']).sum()
         mensual.reset_index(inplace=True)
         mensual.to_csv('./output/mensual.csv',sep=';',index=False,decimal=',', encoding='CP1252')
         print('\nMENSUAL ...... UPDATED\n')
 
-        semanal = base.groupby(by=['mes','fecha_semana','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
+        semanal = base.groupby(by=['anyo','mes','fecha_semana','cliente', 'campanya', 'objetivo','subojetivo', 'objetivo_final',
         'disciplina', 'soporte', 'tipo_coste', 'pagador', 'producto', 'subproducto',
         'creatividad','modelo_compra','modelo_programatico','dispositivo','estrategia','duracion_video']).sum()
         semanal.reset_index(inplace=True)
