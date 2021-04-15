@@ -13,6 +13,18 @@ def NormalizarObjetivo(description):
        else:
               return 'SIN_OBJETIVO'
 
+def NormalizarSubObjetivo(description):
+       if re.search('CAP', description.upper()):
+              return 'Captación'
+       elif re.search('CON', description.upper()):
+              return 'Consideración'
+       elif re.search('NOT', description.upper()):
+              return 'Notoriedad'
+       elif re.search('FID', description.upper()):
+              return 'Fidelización'
+       else:
+              return 'SIN_OBJETIVO'
+
 def NormalizarDisciplina(description):
        if re.search('SOC', description.upper()):
               return 'Social Media'
@@ -47,7 +59,7 @@ def create_monthly_df(path,file):
     df2.rename(columns={'Cliente ':'cliente',
     'Campaña':'campanya',
     'Objetivo ':'objetivo_0',
-    'Sub-Objetivo':'subojetivo',
+    'Sub-Objetivo':'subojetivo_0',
     'Objetivo Final':'objetivo_final',
     'disciplina':'disciplina_0',
     'tipo_coste':'tipo_coste_0',
@@ -62,6 +74,7 @@ def create_monthly_df(path,file):
 
     df2['objetivo'] = df2.objetivo_0.apply(lambda x: NormalizarObjetivo(x))
     df2['disciplina'] = df2.disciplina_0.apply(lambda x: NormalizarDisciplina(x)) 
+    df2['subojetivo'] = df2.subojetivo_0.apply(lambda x: NormalizarSubObjetivo(x))
     df2['tipo_coste'] = df2.tipo_coste_0.apply(lambda x: NormalizarTipoCoste(x))
     df2['fecha_dia'] = pd.to_datetime(df2['fecha_dia'], format='%Y-%m-%d')
     df2['dia_semana']=df2.fecha_dia.dt.weekday
